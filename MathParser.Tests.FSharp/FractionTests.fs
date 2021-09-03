@@ -15,10 +15,12 @@ let ParseFraction() =
 
     let result = _parser.TryParse(expression, variables)
 
-    let mutable computedResult = float 0
-    if result.IsSuccessfulCreated
-    then computedResult <- result.Expression.ComputeValue(new ResizeArray<Parameter>([parameter]))
-    let expectedResult = float 1 / float 2 / float 3 / float 4 / parameter.Value
+    let computedResult = 
+        match result.IsSuccessfulCreated with
+        | true -> result.Expression.ComputeValue(new ResizeArray<Parameter>([parameter]))
+        | _ -> 0.0
+
+    let expectedResult = 1.0 / 2.0 / 3.0 / 4.0 / parameter.Value
 
     Assert.True(result.IsSuccessfulCreated)
     Assert.Equal("Fraction", result.Expression.Name)

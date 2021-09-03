@@ -15,10 +15,13 @@ let ParsTgSquared() =
 
     let result = _parser.TryParse(expression, variables)
 
-    let mutable computedResult = float 0
-    if result.IsSuccessfulCreated
-    then computedResult <- result.Expression.ComputeValue(new ResizeArray<Parameter>([parameter]))
-    let expectedResult = Math.Pow(Math.Tan(parameter.Value), float 2)
+
+    let computedResult = 
+        match result.IsSuccessfulCreated with
+        | true -> result.Expression.ComputeValue(new ResizeArray<Parameter>([parameter]))
+        | _ -> 0.0
+
+    let expectedResult = Math.Pow(Math.Tan(parameter.Value), 2.0)
 
     Assert.True(result.IsSuccessfulCreated)
     Assert.Equal("Pow", result.Expression.Name)

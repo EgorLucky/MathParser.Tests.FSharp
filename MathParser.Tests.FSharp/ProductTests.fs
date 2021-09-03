@@ -13,16 +13,18 @@ let ParseSum () =
     let variables = new ResizeArray<Variable>([parameter.GetVariable()])
     let result = _parser.TryParse(expression, variables)
 
-    let mutable computedResult = 0.0
-    if result.IsSuccessfulCreated
-    then computedResult <- result.Expression.ComputeValue(new ResizeArray<Parameter>([parameter]))
-    let expectedResult = float 2 + 
+    let computedResult = 
+        match result.IsSuccessfulCreated with
+        | true -> result.Expression.ComputeValue(new ResizeArray<Parameter>([parameter]))
+        | _ -> 0.0
+
+    let expectedResult = 2.0 + 
                          0.5 + 
                          2.5 * 
                          Math.Cos(Math.PI) - 
-                         Math.Log(float 8, float 2) + 
+                         Math.Log(8.0, 2.0) + 
                          Math.Sin(parameter.Value) + 
-                         Math.Pow(Math.Tan(parameter.Value), float 2)
+                         Math.Pow(Math.Tan(parameter.Value), 2.0)
     Assert.True(result.IsSuccessfulCreated)
     Assert.Equal("Sum", result.Expression.Name)
     Assert.Equal(expectedResult, computedResult)
@@ -36,18 +38,19 @@ let ParseProduct() =
 
     let result = _parser.TryParse(expression, variables)
 
-    let mutable computedResult = float 0
-    if result.IsSuccessfulCreated
-    then computedResult <- result.Expression.ComputeValue(new ResizeArray<Parameter>([ parameter ]))
+    let computedResult = 
+        match result.IsSuccessfulCreated with
+        | true -> result.Expression.ComputeValue(new ResizeArray<Parameter>([parameter]))
+        | _ -> 0.0
 
-    let expectedResult = float 2 * 0.5 * -2.5 
+    let expectedResult = 2.0 * 0.5 * -2.5 
                             * Math.Cos(Math.PI) 
-                            * Math.Pow(Math.Tan(parameter.Value), float 2) 
-                            * Math.Log(float -8, float -2) 
+                            * Math.Pow(Math.Tan(parameter.Value), 2.0) 
+                            * Math.Log(-8.0, -2.0) 
                             * Math.Sin(parameter.Value)
-                            * float (2+3)
-                            * (Math.Cos(float 0) + Math.Sin(float 0))
-                            * (float 2 * (parameter.Value + float 1))
+                            * (2.0 + 3.0)
+                            * (Math.Cos(0.0) + Math.Sin(0.0))
+                            * (2.0 * (parameter.Value + 1.0))
 
     
     Assert.True(result.IsSuccessfulCreated)
