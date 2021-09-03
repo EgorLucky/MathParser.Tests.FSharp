@@ -9,8 +9,7 @@ let _parser = new MathParser()
 [<Fact>]
 let ParseSum () =
     let expression = "2 + 0.5 + 2.5*cos(pi) - log(2, 8) + sin(x) + tg(x)^2"
-    let parameter = new Parameter(VariableName = "x", 
-                                  Value = 0.0)
+    let parameter = new Parameter("x", 0.0)
     let variables = new ResizeArray<Variable>([parameter.GetVariable()])
     let result = _parser.TryParse(expression, variables)
 
@@ -31,8 +30,7 @@ let ParseSum () =
 [<Fact>]
 let ParseSumWithManyPlusesInTheEnd() =
     let expression = "2 + 0.5 + 2.5*cos(pi) - log(2, 8) + sin(x) + tg(x)^2++++++"
-    let parameter = new Parameter(VariableName = "x",
-                                  Value = float 0)
+    let parameter = new Parameter("x", 0.0)
 
     let variables = new ResizeArray<Variable>([parameter.GetVariable()])
 
@@ -43,8 +41,7 @@ let ParseSumWithManyPlusesInTheEnd() =
 [<Fact>]
 let ParseSumWithMany_F_LettersInTheEnd() =
     let expression = "2 + 0.5 + 2.5*cos(pi) - log(2, 8) + sin(x) + tg(x)^2ffffffff"
-    let parameter = new Parameter(VariableName = "x",
-                                  Value = float 0)
+    let parameter = new Parameter("x", 0.0)
 
     let variables = new ResizeArray<Variable>([parameter.GetVariable()])
 
@@ -55,8 +52,7 @@ let ParseSumWithMany_F_LettersInTheEnd() =
 [<Fact>]
 let ParseSumWithUnexistExpression() =
     let expression = "2 + 0.5 + 2.5*cos(pi) - log(2, 8) + sin(x) + unexistng(x)^2"
-    let parameter = new Parameter(VariableName = "x",
-                                  Value = float 0)
+    let parameter = new Parameter("x", 0.0)
 
     let variables = new ResizeArray<Variable>([parameter.GetVariable()])
 

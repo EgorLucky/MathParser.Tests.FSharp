@@ -9,8 +9,7 @@ let _parser = new MathParser();
 [<Fact>]
 let ParseFraction() =
     let expression = "1/2/3/4/x"
-    let parameter = new Parameter(VariableName = "x",
-                                  Value = float 0)
+    let parameter = new Parameter("x", 0.0)
 
     let variables = new ResizeArray<Variable>([parameter.GetVariable()])
 

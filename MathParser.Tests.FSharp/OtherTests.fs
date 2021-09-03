@@ -9,8 +9,7 @@ let _parser = new MathParser();
 [<Fact>]
 let ParseManyBrackets() =
     let expression = "(((tg(x)^2)))"
-    let parameter = new Parameter(VariableName = "x",
-                                  Value = float 0)
+    let parameter = new Parameter("x", 0.0)
 
     let variables = new ResizeArray<Variable>([parameter.GetVariable()])
 
